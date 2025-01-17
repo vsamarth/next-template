@@ -18,6 +18,7 @@ import Link from 'next/link'
 import { signInSchema } from '@/lib/validation'
 import { startTransition, useActionState, useEffect } from 'react'
 import { signIn } from '@/app/(auth)/actions'
+import Icons from './icons'
 
 type FormValues = z.infer<typeof signInSchema>
 
@@ -105,7 +106,15 @@ export function LoginForm() {
             />
           ))}
           <Button type='submit' className='mt-2 w-full' disabled={isPending}>
-            Sign in
+            <span className='relative flex items-center'>
+              Sign in
+              <Icons.spinner
+                className={cn(
+                  'absolute -right-6 size-4 animate-spin',
+                  !isPending && 'hidden',
+                )}
+              />
+            </span>
           </Button>
         </div>
         <div className='text-center text-sm'>

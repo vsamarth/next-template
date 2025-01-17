@@ -1,10 +1,11 @@
 import NextAuth, { CredentialsSignin, NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { signInSchema } from '../validation'
-import db from '../db'
+import { signInSchema } from './validation'
+import db from './db'
 import { verify } from '@node-rs/argon2'
 
 const authConfig: NextAuthConfig = {
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
