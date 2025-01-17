@@ -2,9 +2,9 @@ import AuthForm from '@/components/auth-form'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Sign in',
+  title: 'Create your account',
 }
 
 export default function Login() {
-  return <AuthForm variant='sign-in' />
+  return <AuthForm variant='register' />
 }

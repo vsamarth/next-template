@@ -56,9 +56,12 @@ export default function UserDropdown({ user }: { user: Session['user'] }) {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuItem asChild>
-        <button className='w-full cursor-pointer' onClick={async () => {
-          await signOut()
-        }}>
+        <button
+          className='w-full cursor-pointer'
+          onClick={async () => {
+            await signOut()
+          }}
+        >
           <LogOut />
           Sign out
         </button>
