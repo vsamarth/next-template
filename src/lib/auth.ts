@@ -1,8 +1,25 @@
-import NextAuth, { CredentialsSignin, NextAuthConfig } from 'next-auth'
+import 'server-only'
+
+import NextAuth, {
+  CredentialsSignin,
+  NextAuthConfig,
+  type DefaultSession,
+} from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { signInSchema } from './validation'
 import db from './db'
 import { verify } from '@node-rs/argon2'
+import { unauthorized } from 'next/navigation'
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      email: string
+      name: string
+      avatar?: string
+    } & DefaultSession['user']
+  }
+}
 
 const authConfig: NextAuthConfig = {
   trustHost: true,
@@ -28,7 +45,8 @@ const authConfig: NextAuthConfig = {
         }
 
         return {
-          email,
+          email: user.email,
+          name: user.name,
         }
       },
     }),
@@ -36,3 +54,10 @@ const authConfig: NextAuthConfig = {
 }
 
 export const { auth, handlers, signOut, signIn } = NextAuth(authConfig)
+
+export async function getUser() {
+  const session = await auth()
+  if (!session || !session.user) unauthorized()
+
+  return session.user
+}
