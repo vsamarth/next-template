@@ -1,5 +1,6 @@
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
+import * as schema from './schema'
 
 /**
  * Cache the database connection in development. This avoids creating a new connection on every HMR
@@ -19,5 +20,5 @@ if (process.env.NODE_ENV != 'production') {
   globalForDb.pool = pool
 }
 
-const db = drizzle({ client: pool })
+const db = drizzle({ client: pool, schema })
 export default db

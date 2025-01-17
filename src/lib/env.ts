@@ -1,5 +1,6 @@
 import { z, TypeOf } from 'zod'
 const envSchema = z.object({
+  AUTH_SECRET: z.string().min(32),
   DATABASE_URL: z.string(),
 })
 /* eslint-disable */
