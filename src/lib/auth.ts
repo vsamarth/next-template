@@ -23,6 +23,12 @@ declare module 'next-auth' {
 
 const authConfig: NextAuthConfig = {
   trustHost: true,
+  pages: {
+    signIn: '/login',
+    signOut: '/login',
+    error: '/login',
+    newUser: '/register',
+  },
   providers: [
     Credentials({
       credentials: {

@@ -12,6 +12,7 @@ import {
 import { useSidebar } from './shared/sidebar'
 import { Session } from 'next-auth'
 import UserAvatar from './user-avatar'
+import { signOut } from '@/app/(auth)/actions'
 
 export default function UserDropdown({ user }: { user: Session['user'] }) {
   const { isMobile } = useSidebar()
@@ -54,9 +55,13 @@ export default function UserDropdown({ user }: { user: Session['user'] }) {
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <LogOut />
-        Sign out
+      <DropdownMenuItem asChild>
+        <button className='w-full cursor-pointer' onClick={async () => {
+          await signOut()
+        }}>
+          <LogOut />
+          Sign out
+        </button>
       </DropdownMenuItem>
     </DropdownMenuContent>
   )
