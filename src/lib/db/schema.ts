@@ -17,7 +17,7 @@ export const emailVerificationSessions = pgTable(
     userId: uuid('user_id')
       .notNull()
       .references(() => users.id),
-    token: text('token').notNull(),
+    tokenHash: text('token_hash').notNull(),
     expiresAt: timestamp('expires_at').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
   },

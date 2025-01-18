@@ -1,51 +1,15 @@
 import { Button } from '@/components/shared/button'
-import { getUser } from '@/lib/auth'
 import Link from 'next/link'
 import Image from 'next/image'
 import { type Metadata } from 'next'
-import db from '@/lib/db'
-import { addHours } from 'date-fns'
-import { emailVerificationSessions } from '@/lib/db/schema'
+import { getVerificationSession } from '@/lib/auth/verification'
 
 export const metadata: Metadata = {
   title: 'Verify your email',
 }
 
-function generateVerificationToken() {
-  return 'abcdef'
-}
-
-async function sendLink() {
-  const now = new Date()
-  const { id, email } = await getUser()
-  const session = await db.query.emailVerificationSessions.findFirst({
-    where: (sessions, { eq, and, gt }) =>
-      and(eq(sessions.userId, id), gt(sessions.expiresAt, now)),
-    columns: {
-      id: true,
-    },
-  })
-  if (session) {
-    return {
-      email,
-    }
-  }
-
-  const token = generateVerificationToken()
-  const expiresAt = addHours(now, 24)
-  await db.insert(emailVerificationSessions).values({
-    userId: id,
-    token,
-    expiresAt,
-  })
-  console.log('Email verification token:', token)
-  return {
-    email,
-  }
-}
-
 export default async function EmailVerification() {
-  const { email } = await sendLink()
+  const { email } = await getVerificationSession()
   return (
     <div className='container relative mx-auto flex max-w-md flex-col items-center justify-center p-4'>
       <div className='flex w-full flex-col items-center gap-8'>

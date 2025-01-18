@@ -52,7 +52,11 @@ export async function signUp(
       email,
       passwordHash,
     })
-    await authSignIn('credentials', { email, password, redirectTo: '/' })
+    await authSignIn('credentials', {
+      email,
+      password,
+      redirectTo: '/verify-email',
+    })
   } catch (error) {
     if (isUniqueViolationError(error)) {
       return {

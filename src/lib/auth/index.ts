@@ -10,6 +10,7 @@ import { signInSchema } from '../validation'
 import db from '../db'
 import { verify } from '@node-rs/argon2'
 import { unauthorized } from 'next/navigation'
+import { cache } from 'react'
 
 declare module 'next-auth' {
   interface Session {
@@ -69,9 +70,24 @@ const authConfig: NextAuthConfig = {
 
 export const { auth, handlers, signOut, signIn } = NextAuth(authConfig)
 
-export async function getUser() {
+export const getUser = cache(async () => {
   const session = await auth()
-  if (!session || !session.user) unauthorized()
+  if (!session || !session.user) {
+    unauthorized()
+  }
 
-  return session.user
-}
+  const user = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.id, session.user.id),
+    columns: {
+      id: true,
+      email: true,
+      name: true,
+      emailVerified: true,
+    },
+  })
+
+  if (!user) {
+    unauthorized()
+  }
+  return user
+})
