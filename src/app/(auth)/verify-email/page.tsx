@@ -73,10 +73,9 @@ export default async function EmailVerification() {
           </Button>
         </div>
 
-        {/* Helper Links */}
         <div className='flex w-full flex-col items-center gap-4 text-sm text-muted-foreground'>
           <p>
-            No email in your inbox or spam folder?{' '}
+            Didn&apos;t receive the email?{' '}
             <button className='text-primary underline underline-offset-4'>
               Resend it
             </button>
