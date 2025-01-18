@@ -13,7 +13,7 @@ function avatarInitials(fullName: string): string {
 export default function UserAvatar({ user }: { user: Session['user'] }) {
   return (
     <Avatar className='size-8 rounded-full'>
-      <AvatarImage src={user.avatar} alt={user.name} />
+      <AvatarImage src={user.image ?? undefined} alt={user.name} />
       <AvatarFallback className='rounded-full'>
         {avatarInitials(user.name)}
       </AvatarFallback>

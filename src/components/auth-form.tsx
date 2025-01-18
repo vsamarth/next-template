@@ -81,7 +81,7 @@ export default function AuthForm({
   return (
     <Form {...form}>
       <form
-        className='flex flex-col gap-6'
+        className='mx-auto grid w-full max-w-sm gap-6'
         noValidate
         onSubmit={form.handleSubmit(onSubmit)}
       >
@@ -135,11 +135,11 @@ export default function AuthForm({
             </span>
           </Button>
         </div>
-        <div className='text-center text-sm'>
+        <div className='text-center text-sm text-muted-foreground'>
           {isSignIn ? "Don't" : 'Already'} have an account?{' '}
           <Link
             href={isSignIn ? '/register' : '/login'}
-            className='underline underline-offset-4'
+            className='text-primary underline underline-offset-4'
           >
             {isSignIn ? 'Sign up' : 'Sign in'}
           </Link>

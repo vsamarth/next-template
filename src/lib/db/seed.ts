@@ -14,6 +14,16 @@ async function main() {
         passwordHash: f.valuesFromArray({
           values: ['secret'].map((password) => hashSync(password)),
         }),
+        emailVerified: f.weightedRandom([
+          {
+            weight: 0.8,
+            value: f.default({ defaultValue: null }),
+          },
+          {
+            weight: 0.2,
+            value: f.date({ maxDate: new Date() }),
+          },
+        ]),
       },
     },
   }))

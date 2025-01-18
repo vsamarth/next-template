@@ -6,17 +6,17 @@ import NextAuth, {
   type DefaultSession,
 } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { signInSchema } from './validation'
-import db from './db'
+import { signInSchema } from '../validation'
+import db from '../db'
 import { verify } from '@node-rs/argon2'
 import { unauthorized } from 'next/navigation'
 
 declare module 'next-auth' {
   interface Session {
     user: {
+      id: string
       email: string
       name: string
-      avatar?: string
     } & DefaultSession['user']
   }
 }
@@ -25,9 +25,20 @@ const authConfig: NextAuthConfig = {
   trustHost: true,
   pages: {
     signIn: '/login',
-    signOut: '/login',
     error: '/login',
     newUser: '/register',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      session.user.id = token.id as string
+      return session
+    },
   },
   providers: [
     Credentials({
@@ -50,10 +61,7 @@ const authConfig: NextAuthConfig = {
           throw new CredentialsSignin()
         }
 
-        return {
-          email: user.email,
-          name: user.name,
-        }
+        return user
       },
     }),
   ],

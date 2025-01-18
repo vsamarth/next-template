@@ -35,6 +35,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.38.4",
     "lucide-react": "^0.472.0",
     "next": "15.1.4",
