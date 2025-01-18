@@ -13,7 +13,7 @@
     "lint": "prettier --check . && next lint",
     "preview": "npm run build && npm run start",
     "start": "next start",
-    "test:e2e": "playwright test"
+    "test:e2e": "dotenvx run -- playwright test"
   },
   "prettier": {
     "jsxSingleQuote": true,
