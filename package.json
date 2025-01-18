@@ -12,7 +12,8 @@
     "format": "prettier --log-level warn --write .",
     "lint": "prettier --check . && next lint",
     "preview": "npm run build && npm run start",
-    "start": "next start"
+    "start": "next start",
+    "test:e2e": "playwright test"
   },
   "prettier": {
     "jsxSingleQuote": true,
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.33.0",
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.49.1",
     "@types/node": "^22",
     "@types/pg": "^8.11.10",
     "@types/react": "^19",
